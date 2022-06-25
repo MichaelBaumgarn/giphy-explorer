@@ -1,26 +1,29 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { SearchResults } from "./Components/SearchResults";
+import { Search } from "./Components/Search";
+import { useGiphyList } from "./Components/hooks";
+import { Giphy } from "./Components/types";
+import { useState } from "react";
 
 function App() {
+  const list = useGiphyList();
+  const [searchResults, setSearchResults] = useState(list || []);
+  const getList = async (q: string) => {
+    let freshList = await fetch(
+      `https://api.giphy.com/v1/gifs/search?api_key=tVaJe9QRTL6VZp9xhBkogbNWFTI9hYnJ&limit=10&q=${q}`
+    );
+    if (freshList.ok) {
+      let res = await freshList.json();
+      setSearchResults(res.data);
+    }
+  };
+  const handleSubmitSearch = (q: string) => {
+    return getList(q);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Hi React
-        </a>
-      </header>
-      <SearchResults></SearchResults>
+      <Search onSubmit={handleSubmitSearch}></Search>
+      <SearchResults list={searchResults}></SearchResults>
     </div>
   );
 }
