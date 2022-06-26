@@ -4,6 +4,7 @@ import { Search } from "./Components/Search";
 import { useGiphyList } from "./Components/hooks";
 import { Giphy } from "./Components/types";
 import { useEffect, useState } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   const list = useGiphyList();
@@ -26,10 +27,12 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Search onSubmit={handleSubmitSearch}></Search>
-      <SearchResults list={searchResults}></SearchResults>
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        <Search onSubmit={handleSubmitSearch}></Search>
+        <SearchResults list={searchResults}></SearchResults>
+      </div>
+    </ChakraProvider>
   );
 }
 
