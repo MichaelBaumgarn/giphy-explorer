@@ -1,3 +1,11 @@
+import {
+  Box,
+  Center,
+  Container,
+  Text,
+  Image,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import * as React from "react";
 import { Giphy } from "./types";
 
@@ -8,20 +16,22 @@ export const SearchResults = ({ list }: SearchListProlps) => {
   if (!list) return null;
 
   return (
-    <div>
-      <p>SearchResults</p>
-      <div>
-        <ul>
-          {list.map((l) => (
-            <div key={l.title}>
-              <li>{l.title}</li>
-              <li>
-                <img alt={l.title} src={l.images.downsized.url}></img>
-              </li>
-            </div>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <Container p="8" m="8">
+      <Box>
+        <Text>SearchResults</Text>
+      </Box>
+      <SimpleGrid columns={3} maxW="90%" justifyItems="center">
+        {list.map((l) => (
+          <Box key={l.title} maxWidth="200" maxHeight="200">
+            <Image
+              alt={l.title}
+              src={l.images.downsized.url}
+              maxBlockSize={150}
+            ></Image>
+            <p>{l.title}</p>
+          </Box>
+        ))}
+      </SimpleGrid>
+    </Container>
   );
 };
