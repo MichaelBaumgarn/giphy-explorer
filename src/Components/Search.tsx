@@ -8,9 +8,11 @@ interface SearchProps {
 export const Search = ({ onSubmit }: SearchProps) => {
   const [search, setSearch] = useState("");
   return (
-    <Box mt={30}>
+    <Box my={8}>
       <Input onChange={(e) => setSearch(e.target.value)} value={search}></Input>
-      <Button onClick={() => onSubmit(search)}>Search for {search}</Button>
+      <Button my={4} onClick={() => onSubmit(search)}>
+        Search for {search}
+      </Button>
     </Box>
   );
 };
